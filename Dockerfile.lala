@@ -1,0 +1,20 @@
+FROM ubuntu:18.04
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt update -y && apt -yq install sudo xfce4 xfce4-goodies wget python3-numpy python3-setuptools\
+    && rm -rf /var/lib/apt/lists/*
+ADD https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py /usr/bin/systemctl
+RUN chmod a+x /usr/bin/systemctl && ln -sf /usr/bin/systemctl /bin/systemctl
+ADD start.sh /
+ENV tigervnc_version=1.10.1 nvm_version=0.37.2 TZ=Asia/Shanghai websockify_version=0.9.0 noVNC_version=1.2.0
+
+RUN wget "https://bintray.com/tigervnc/stable/download_file?file_path=tigervnc-${tigervnc_version}.x86_64.tar.gz" -O /tigervnc.tar.gz \
+    && tar -xvf /tigervnc.tar.gz -C / && rm /tigervnc.tar.gz \
+    && wget https://github.com/novnc/websockify/archive/v${websockify_version}.tar.gz -O /websockify.tar.gz && tar -xvf /websockify.tar.gz -C / \
+    && cd /websockify-${websockify_version} && python3 setup.py install && cd / && rm -r /websockify.tar.gz /websockify-${websockify_version} \
+    && wget https://github.com/novnc/noVNC/archive/v${noVNC_version}.tar.gz -O /noVNC.tar.gz && tar -xvf /noVNC.tar.gz -C / \
+    && cd /noVNC-${noVNC_version} && ln -s vnc.html index.html && rm /noVNC.tar.gz \
+    && wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v${nvm_version}/install.sh | bash 
+
+WORKDIR /root
+EXPOSE 5900 6080
+CMD ["/start.sh"]
