@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 WORKDIR /root
 COPY passwd xstartup /root/.vnc/
-COPY entrypoint.sh /root/
+COPY entrypoint.sh /
 COPY supervisord.conf /etc/supervisor/conf.d/
 EXPOSE 5901 22
-ENTRYPOINT [ "/root/entrypoint.sh" ]
+ENTRYPOINT [ "/entrypoint.sh" ]

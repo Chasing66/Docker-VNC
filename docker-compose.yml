@@ -3,7 +3,7 @@ services:
     vnc:
         build:
             context: .
-            dockerfile: Dockerfile.Debian
+            dockerfile: Dockerfile
         container_name: vnc
         hostname: vnc
         image: enwaiax/vnc
