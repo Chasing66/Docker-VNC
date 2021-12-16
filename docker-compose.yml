@@ -1,18 +1,14 @@
-version: '3.8'
+version: "3.8"
 services:
     vnc:
         build:
             context: .
-            dockerfile: Dockerfile
+            dockerfile: Dockerfile.Debian
         container_name: vnc
         hostname: vnc
         image: enwaiax/vnc
         privileged: true
         ports:
             - 6901:5901
-        environment:
-            - SecurityTypes=VncAuth,TLSVnc
-            - geometry=1920x1080
-            - depth=24
+            - "10022:22"
         restart: unless-stopped
-        # entrypoint: ['sleep', 'infinity']

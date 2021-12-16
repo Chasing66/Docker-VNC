@@ -13,7 +13,7 @@ RUN wget "https://bintray.com/tigervnc/stable/download_file?file_path=tigervnc-$
     && cd /websockify-${websockify_version} && python3 setup.py install && cd / && rm -r /websockify.tar.gz /websockify-${websockify_version} \
     && wget https://github.com/novnc/noVNC/archive/v${noVNC_version}.tar.gz -O /noVNC.tar.gz && tar -xvf /noVNC.tar.gz -C / \
     && cd /noVNC-${noVNC_version} && ln -s vnc.html index.html && rm /noVNC.tar.gz \
-    && wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v${nvm_version}/install.sh | bash 
+    && wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v${nvm_version}/install.sh | bash
 
 WORKDIR /root
 EXPOSE 5900 6080
