@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 ENV DEBIAN_FRONTEND=noninteractive TZ=Asia/Shanghai
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    tigervnc-standalone-server autocutsel \
+    tigervnc-standalone-server autocutsel tigervnc-common \
     xfce4 xfce4-terminal openssh-server supervisor \
     procps \
     dbus-x11 \
