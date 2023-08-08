@@ -1,14 +1,16 @@
-FROM ubuntu:latest
+FROM ubuntu:22.04
+WORKDIR /root
+COPY .vnc /root/.vnc/
+COPY entrypoint.sh /
+COPY supervisord.conf /etc/supervisor/conf.d/
+
 ENV DEBIAN_FRONTEND=noninteractive TZ=Asia/Shanghai
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    tigervnc-standalone-server autocutsel tigervnc-common \
-    xfce4 xfce4-terminal openssh-server supervisor \
+    xfce4 xfce4-goodies tigervnc-standalone-server tigervnc-tools \
+    vim openssh-server supervisor \
     procps \
     dbus-x11 \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-WORKDIR /root
-COPY passwd xstartup /root/.vnc/
-COPY entrypoint.sh /
-COPY supervisord.conf /etc/supervisor/conf.d/
+
 EXPOSE 5901 22
 ENTRYPOINT [ "/entrypoint.sh" ]
